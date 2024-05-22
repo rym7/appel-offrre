@@ -1,0 +1,209 @@
+:<x-app-layout>
+<style type="text/css" id="form-designer-style">
+    /* Injected CSS Code */
+/*PREFERENCES STYLE*/
+    .form-all {
+      font-family: Inter, sans-serif;
+    }
+  
+    .form-label.form-label-auto {
+      
+    display: block;
+    float: none;
+    text-align: left;
+    width: 100%;
+  
+    }
+  
+    .form-line {
+      margin-top: 12px;
+      margin-bottom: 12px;
+    }
+  
+    .form-all {
+      max-width: 752px;
+      width: 100%;
+    }
+  
+    .form-label.form-label-left,
+    .form-label.form-label-right,
+    .form-label.form-label-left.form-label-auto,
+    .form-label.form-label-right.form-label-auto {
+      width: 230px;
+    }
+  
+    .form-all {
+      font-size: 16px
+    }
+  
+    .supernova .form-all, .form-all {
+      background-color: #fff;
+    }
+  
+    .form-all {
+      color: #2C3345;
+    }
+    .form-header-group .form-header {
+      color: #2C3345;
+    }
+    .form-header-group .form-subHeader {
+      color: #2C3345;
+    }
+    .form-label-top,
+    .form-label-left,
+    .form-label-right,
+    .form-html,
+    .form-checkbox-item label,
+    .form-radio-item label,
+    span.FITB .qb-checkbox-label,
+    span.FITB .qb-radiobox-label,
+    span.FITB .form-radio label,
+    span.FITB .form-checkbox label,
+    [data-blotid][data-type=checkbox] [data-labelid],
+    [data-blotid][data-type=radiobox] [data-labelid],
+    span.FITB-inptCont[data-type=checkbox] label,
+    span.FITB-inptCont[data-type=radiobox] label {
+      color: #2C3345;
+    }
+    .form-sub-label {
+      color: #464d5f;
+    }
+  
+  .supernova {
+    background-color: rgb(243, 243, 254);
+  }
+  .supernova body {
+    background: transparent;
+  }
+  
+    .form-textbox,
+    .form-textarea,
+    .form-dropdown,
+    .form-radio-other-input,
+    .form-checkbox-other-input,
+    .form-captcha input,
+    .form-spinner input {
+      background-color: #fff;
+    }
+  
+    
+    .supernova {
+      background-repeat: no-repeat;
+      background-size:cover;
+      background-attachment: fixed;
+      background-position: center top;
+    }
+
+    .supernova, #stage {
+      background-image: url("//www.jotform.com/images/brushed.png");
+    }
+     .form-all {
+       background-image: url("//www.jotform.com/images/brushed.png");
+       background-repeat: no-repeat;
+       background-size:cover;
+       background-attachment: fixed;
+       background-position: center top;
+    }
+  /*PREFERENCES STYLE*//*__INSPECT_SEPERATOR__*/
+    /* Injected CSS Code */
+</style>
+@if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+          @endif
+
+          <ul class="alert-danger">
+              @foreach($errors->all() as $error)
+                  <li>{{$error}}</li>
+              @endforeach
+          </ul>
+<form  nctype="multipart/form-data" action="{{ route('publications.store') }}" method="POST"   >
+    @csrf
+
+    <label>Choisir le type de publication:</label>
+    <select name="type">
+        <option value="appel_offre">Appel d'Offre</option>
+        <option value="avis_consultation">Avis de Consultation</option>
+    </select>
+
+    <!-- Les champs communs à tous les types de publication -->
+    <div id="champs-communs">
+        <label for="num_offre">Numéro d'Offre:</label>
+        <input type="text" name="num_offre" id="num_offre">
+
+        <label for="etat">État:</label>
+        <input type="text" name="etat" id="etat">
+
+        <label for="titre">Titre:</label>
+        <input type="text" name="titre" id="titre">
+
+        <label for="wilaya">Wilaya:</label>
+        <select name="wilaya" id="wilaya">
+        <option value="" selected disabled>Choisissez une wilaya</option>
+        <option value="1">Adrar</option>
+        <option value="2">Chlef</option>
+        <option value="Laghouat">Laghouat</option>
+        <option value="Oum El Bouaghi">Oum El Bouaghi</option>
+        <option value="Batna">Batna</option>
+        <option value="Béjaïa">Béjaïa</option>
+        <option value="Biskra">Biskra</option>
+        </select>
+
+        <label for="date_publication">Date de Publication:</label>
+        <input type="date" name="date_publication" id="date_publication">
+
+        <label for="date_limite">Date limite:</label>
+        <input type="date" name="date_limite" id="date_limite">
+
+        <label for="date_prolongation">Date de Prolongation:</label>
+        <input type="date" name="date_prolongation" id="date_prolongation">
+
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" cols="30" rows="10"></textarea>
+
+        <button id="ajouter_lot" type="button">Ajouter un lot</button>
+        
+        <div id="lots">
+            <!-- Champ pour le Lot 1 (généré dynamiquement) -->
+        </div>
+
+        <!-- Champs pour les documents -->
+        <label for="document_appel">Document de l'offre:</label>
+        <input type="file" name="document_offre" id="document_offre">
+        
+
+        <label for="document_prolongation">Document de Prolongation:</label>
+        <input type="file" name="document_prolongation" id="document_prolongation">
+        
+
+        <label for="document_annulation">Document d'Annulation:</label>
+        <input type="file" name="document_annulation" id="document_annulation">
+       
+    </div>
+
+    <!-- Bouton de soumission -->
+    <button type="submit">Enregistrer</button>
+</form>
+
+<script>
+    // JavaScript pour afficher ou masquer les champs de lot en fonction de la sélection
+    document.getElementById('ajouter_lot').addEventListener('click', function() {
+    var lotsDiv = document.getElementById('lots');
+    var lotItem = document.createElement('div');
+    lotItem.classList.add('lot-item');
+
+    var label = document.createElement('label');
+    label.textContent = 'Description du Lot:';
+    lotItem.appendChild(label);
+
+    var description = document.createElement('input');
+    description.type = 'text';
+    description.name = 'description_lot[]'; // Utilisation de crochets pour permettre plusieurs valeurs
+    description.placeholder = 'Description du Lot';
+    lotItem.appendChild(description);
+
+    lotsDiv.appendChild(lotItem);
+});
+</script>
+</x-app-layout>

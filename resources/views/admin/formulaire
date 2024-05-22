@@ -1,0 +1,99 @@
+<form enctype="multipart/form-data" method="POST">
+    @csrf
+    <div id="publication-form" style="display: none;">
+    <!-- Conteneur flex pour les champs "Type" et "Numéro d'Offre" -->
+    <div class="flex-container">
+        <div class="flex-item">
+            <label>Choisir le type de publication:</label>
+            <select name="type">
+                <option value="appel_offre">Appel d'Offre</option>
+                <option value="avis_consultation">Avis de Consultation</option>
+            </select>
+        </div>
+        <div class="flex-item">
+            <label for="num_offre">Numéro d'Offre:</label>
+            <input type="text" name="num_offre" id="num_offre">
+        </div>
+
+        <div class="flex-item">
+           
+            <label for="etat">État:</label>
+    <input type="text" name="etat" id="etat">
+        </div>
+    </div>
+
+    <label for="titre">Titre:</label>
+    <input type="text" name="titre" id="titre">
+
+    <label for="wilaya">Wilaya:</label>
+    <select name="wilaya" id="wilaya">
+        <option value="" selected disabled>Choisissez une wilaya</option>
+        <option value="1">Adrar</option>
+        <option value="2">Chlef</option>
+        <option value="Laghouat">Laghouat</option>
+        <option value="Oum El Bouaghi">Oum El Bouaghi</option>
+        <option value="Batna">Batna</option>
+        <option value="Béjaïa">Béjaïa</option>
+        <option value="Biskra">Biskra</option>
+    </select>
+
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" cols="30" rows="2"></textarea>
+
+
+
+    <!-- Conteneur flex pour les champs de dates -->
+    <div class="date-container">
+        <label for="date_publication">Date de Publication:</label>
+        <input type="date" name="date_publication" id="date_publication">
+
+        <label for="date_limite">Date limite:</label>
+        <input type="date" name="date_limite" id="date_limite">
+
+        <label for="date_prolongation">Date de Prolongation:</label>
+        <input type="date" name="date_prolongation" id="date_prolongation">
+    </div>
+
+    
+    <button id="ajouter_lot" type="button">Ajouter un lot</button>
+
+    <div id="lots">
+        <!-- Champ pour le Lot 1 (généré dynamiquement) -->
+    </div>
+
+    <!-- Conteneur flex pour les champs de documents -->
+    <div class="document-container">
+        <label for="document_offre">Document de l'offre:</label>
+        <input type="file" name="document_offre" id="document_offre">
+
+        <label for="document_prolongation">Document de Prolongation:</label>
+        <input type="file" name="document_prolongation" id="document_prolongation">
+
+        <label for="document_annulation">Document d'Annulation:</label>
+        <input type="file" name="document_annulation" id="document_annulation">
+    </div>
+
+    <!-- Bouton de soumission -->
+    <button type="submit">Ajouter</button>
+    </div>
+</form>
+<script>
+    // JavaScript pour afficher ou masquer les champs de lot en fonction de la sélection
+    document.getElementById('ajouter_lot').addEventListener('click', function() {
+        var lotsDiv = document.getElementById('lots');
+        var lotItem = document.createElement('div');
+        lotItem.classList.add('lot-item');
+
+        var label = document.createElement('label');
+        label.textContent = 'Description du Lot:';
+        lotItem.appendChild(label);
+
+        var description = document.createElement('input');
+        description.type = 'text';
+        description.name = 'description_lot[]'; // Utilisation de crochets pour permettre plusieurs valeurs
+        description.placeholder = 'Description du Lot';
+        lotItem.appendChild(description);
+
+        lotsDiv.appendChild(lotItem);
+    });
+</script>
